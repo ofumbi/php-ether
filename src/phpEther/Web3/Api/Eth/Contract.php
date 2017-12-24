@@ -32,10 +32,21 @@ class Contract
 	public function __call($name, $arguments)
     {
 		if (isset($this->abi[self::ABI_TYPE_FUNCTION][$method])) {
-			$payload = [];
 			$abi = $this->abi[self::ABI_TYPE_FUNCTION][$method];
 			if(count($arguments) > count($abi["inputs"])){
-				$payload = $arguments[count($abi["inputs"])];
+				$tx = $arguments[count($abi["inputs"])];
+				if($tx instanceof \phpEther\Transaction){
+					$payload = $tx;
+				}else{
+					foreach($arguments as $arg){
+						if($arg instanceof \phpEther\Account )
+							$tx = new\phpEther\Transaction($arg);
+						else
+							$tx = new\phpEther\Transaction();
+						$payload = $tx ->setWeb3($this->eth->web3)
+					}
+				}
+				
 			}
 			$payload->setTo($this->address);
 			$payload->setData($this->getMethodBin($name, $arguments));	
@@ -71,7 +82,6 @@ class Contract
         if (!isset($this->abi[self::ABI_TYPE_FUNCTION][$method])) {
             throw new \Exception("Method does not exists in abi");
         }
-
         return substr($this->abi[self::ABI_TYPE_FUNCTION][$method]['prototype'], 0, 8) . $this->parseInputs($this->abi[self::ABI_TYPE_FUNCTION][$method]['inputs'], $args);
     }
 

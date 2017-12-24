@@ -21,7 +21,7 @@ class Transaction
     protected $v;
     protected $r;
     protected $s;
-    public function __construct(\phpEther\Account $from, string $to = null, int $value = null, string $data = null, int $nonce = 1, int $gasPrice = 10000000000000, int $gasLimit = 196608 , $web3=NULL )
+    public function __construct(\phpEther\Account $from = null, string $to = null, int $value = null, string $data = null, int $nonce = 1, int $gasPrice = 10000000000000, int $gasLimit = 196608 , $web3=NULL )
     {
 		$this->from = $from??'';
         $this->nonce = Hex::fromDec($nonce);
