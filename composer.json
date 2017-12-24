@@ -1,0 +1,30 @@
+{
+    "name": "ofumbi/php-ether",
+    "description": "Ethereum Php Wallet functions, To be used derive accounts and transactions without a node",
+    "type": "library",
+    "license": "MIT",
+	
+	"repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ofumbi/guzzle-jsonrpc"
+        }
+    ],
+	
+    "authors": [
+        {
+            "name": "ofumbi",
+            "email": "ofuzak@gmail.com"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {
+            "phpEther\\" : "src/phpEther"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "ofumbi/guzzle-jsonrpc": "^3.2"
+    }
+}
